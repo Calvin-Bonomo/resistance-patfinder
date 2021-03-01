@@ -3,7 +3,7 @@ public class Pathfinder2 extends Thread {
 
     public Node findShortestPath(Map map, Node lastPathNode) {
         try {
-            Thread.sleep(100);
+            Thread.sleep(200);
         } catch (InterruptedException ex) {
             ex.printStackTrace();
         }
