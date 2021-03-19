@@ -56,12 +56,14 @@ public class Game extends Thread {
     }
 
     public static void main(String[] args) {
-        Map map = new Map(5, 5);
+        Map map = new Map(25, 25);
         map.generateMap(24);
         Pathfinder2 pf = new Pathfinder2() {
             @Override
             public void start() {
+                long startTime = System.currentTimeMillis();
                 findShortestPath(map, map.getNode(0));
+                System.out.println(System.currentTimeMillis() - startTime);
             }
         };
         Game g = new Game(map, pf);

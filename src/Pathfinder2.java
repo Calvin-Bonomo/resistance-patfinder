@@ -2,22 +2,22 @@ public class Pathfinder2 extends Thread {
     boolean stuck = true;
 
     public Node findShortestPath(Map map, Node lastPathNode) {
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException ex) {
-            ex.printStackTrace();
-        }
+//        try {
+//            Thread.sleep(200);
+//        } catch (InterruptedException ex) {
+//            ex.printStackTrace();
+//        }
         if (lastPathNode.type == Node.NodeType.END)
             return lastPathNode;
 
         discoverAdjacentNodes(map, lastPathNode);
-        while (stuck) {
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException ex) {
-                ex.printStackTrace();
-            }
-        }
+//        while (stuck) {
+//            try {
+//                Thread.sleep(1);
+//            } catch (InterruptedException ex) {
+//                ex.printStackTrace();
+//            }
+//        }
 
         float minCost = getMinCost(map, lastPathNode.index);
         int next = isLowestCostAdjacent(minCost, map, lastPathNode);
@@ -32,26 +32,24 @@ public class Pathfinder2 extends Thread {
         for (int i = 0; i < 4; i ++) {
             if (checkOverflow(lastPathNode.index, mods[i], map)) {
                 Node aNode = map.getNode(lastPathNode.index + mods[i]);
-                if (aNode.type == Node.NodeType.UNKNOWN || aNode.type == Node.NodeType.DISCOVERED) {
+                if (aNode.type == Node.NodeType.UNKNOWN || aNode.type == Node.NodeType.DISCOVERED)
                     aNode.type = Node.NodeType.DISCOVERED;
-                    aNode.e_value = lastPathNode.e_value + aNode.i_value;
-                }
             }
         }
     }
 
     private float getMinCost(Map map, int lastPathIndex) {
         int[] mods = new int[] { map.cols, -1, -map.cols, 1 };
-        float minE_Value = Float.MAX_VALUE;
+        float minI_Value = Float.MAX_VALUE;
 
         for (int i = 0; i < 4; i ++) {
             if (checkOverflow(lastPathIndex, mods[i], map)) {
                 Node aNode = map.getNode(lastPathIndex + mods[i]);
                 if (aNode.type == Node.NodeType.DISCOVERED || aNode.type == Node.NodeType.END)
-                    minE_Value = Math.min(minE_Value, aNode.i_value);
+                    minI_Value = Math.min(minI_Value, aNode.i_value);
             }
         }
-        return minE_Value;
+        return minI_Value;
     }
 
     private int isLowestCostAdjacent(float lowestCost, Map map, Node lastPathNode) {
